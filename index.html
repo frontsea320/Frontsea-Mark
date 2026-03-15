@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线水印工具</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- 预连接以加速 Google Fonts 加载 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>铭刻你的「专属回忆」</h1>
+      <p>留住温度、速度、温柔和愤怒。</p>
+    </header>
+
+    <main class="main-layout">
+      <!-- 左侧控制面板：位置与图片上传 -->
+      <aside class="control-panel left-panel">
+
+        <!-- 文件上传模块 -->
+        <section class="control-group">
+          <h2>1. 上传照片</h2>
+          <label class="file-upload-wrapper">
+            <span class="btn-text">选择图片</span>
+            <input type="file" id="imageInput" accept="image/*" />
+          </label>
+        </section>
+
+        <!-- 坐标与位置模块 -->
+        <section class="control-group">
+          <h2>2. 定位设置</h2>
+          <div class="position-inputs">
+            <div class="input-field-inline">
+              <label for="posX">X:</label>
+              <input type="number" id="posX" value="50">
+            </div>
+            <div class="input-field-inline">
+              <label for="posY">Y:</label>
+              <input type="number" id="posY" value="50">
+            </div>
+          </div>
+          <div class="position-shortcuts">
+            <button class="shortcut-btn" data-pos="top-left">左上</button>
+            <button class="shortcut-btn" data-pos="top-center">中上</button>
+            <button class="shortcut-btn" data-pos="top-right">右上</button>
+            <button class="shortcut-btn" data-pos="center-left">左中</button>
+            <button class="shortcut-btn" data-pos="center">中心</button>
+            <button class="shortcut-btn" data-pos="center-right">右中</button>
+            <button class="shortcut-btn" data-pos="bottom-left">左下</button>
+            <button class="shortcut-btn" data-pos="bottom-center">中下</button>
+            <button class="shortcut-btn" data-pos="bottom-right">右下</button>
+          </div>
+
+          <!-- 摇杆组件 -->
+          <div class="joystick-container">
+            <div class="joystick-base" id="joystickBase">
+              <div class="joystick-stick" id="joystickStick"></div>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <!-- 画布展示区（移入居中位） -->
+      <section class="canvas-container center-panel">
+        <div class="canvas-wrapper empty" id="canvasWrapper">
+          <canvas id="mainCanvas"></canvas>
+          <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <p>请上传图片进行预览</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 右侧控制面板：文字样式精细控制 -->
+      <aside class="control-panel right-panel">
+        <!-- 文字和字体模块 -->
+        <section class="control-group">
+          <h2>3. 设置水印文本</h2>
+          <div class="input-field">
+            <label for="watermarkText">文本内容</label>
+            <input type="text" id="watermarkText" placeholder="输入水印文字" value="版权所有">
+          </div>
+
+          <div class="input-field">
+            <label for="fontFamily">选择字体</label>
+            <select id="fontFamily">
+              <option value="Inter">现代感无衬线 (Inter)</option>
+              <option value="Roboto">经典且通用 (Roboto)</option>
+              <option value="Outfit">活泼吸睛 (Outfit)</option>
+              <option value="Pacifico">草书风格 (Pacifico)</option>
+              <option value="ZCOOL KuaiLe">站酷快乐体 (ZCOOL KuaiLe)</option>
+            </select>
+          </div>
+
+          <div class="input-field">
+            <label for="customFontUrl">或者自定义 Google Fonts 链接</label>
+            <div style="display: flex; gap: 0.5rem; width: 100%;">
+              <input type="text" id="customFontUrl" placeholder="如 https://fonts.googleapis.com/css2?family=Oswald...">
+              <button id="loadCustomFontBtn" class="shortcut-btn" style="white-space: nowrap;">加载</button>
+            </div>
+          </div>
+
+          <div class="input-field">
+            <label for="fontSize">字体大小</label>
+            <input type="range" id="fontSize" min="1" max="50" value="5">
+          </div>
+
+          <div class="input-field">
+            <label for="fontOpacity">字体透明度</label>
+            <input type="range" id="fontOpacity" min="1" max="100" value="100">
+          </div>
+
+          <div class="position-inputs">
+            <div class="input-field-inline">
+              <label for="fontWeight">字重 (粗细)</label>
+              <select id="fontWeight" style="width: 100%;">
+                <option value="100">Thin (100)</option>
+                <option value="300">Light (300)</option>
+                <option value="400">Regular (400)</option>
+                <option value="500">Medium (500)</option>
+                <option value="600" selected>SemiBold (600)</option>
+                <option value="700">Bold (700)</option>
+                <option value="900">Black (900)</option>
+              </select>
+            </div>
+
+            <div class="input-field-inline">
+              <input type="checkbox" id="fontStyle" style="width:16px;height:16px;">
+              <label for="fontStyle">使用斜体 (Italic)</label>
+            </div>
+          </div>
+
+          <div class="color-picker-wrapper input-field">
+            <label for="watermarkColor">水印颜色</label>
+            <input type="color" id="watermarkColor" value="#ffffff">
+          </div>
+        </section>
+
+        <!-- 输出模块 -->
+        <section class="control-group action-group">
+          <button id="downloadBtn" class="primary-btn" disabled>下载水印照片</button>
+        </section>
+      </aside>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

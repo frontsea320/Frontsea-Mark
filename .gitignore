@@ -1,0 +1,12 @@
+# 依赖和日志
+node_modules/
+npm-debug.log
+.DS_Store
+
+# Electron 打包产生的临时与输出目录
+# 我们只排除整个 dist 目录，但如果您想在代码仓库里硬塞一个 dmg，可以在下面重新把它包含进来，
+# 不过在 GitHub 上推荐的最佳实践是：代码传 Master，dmg 传 Releases 页面。
+dist/
+dist-mac/
+build/
+out/

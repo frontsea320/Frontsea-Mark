@@ -1,0 +1,27 @@
+{
+  "name": "frontsea-watermark-app",
+  "version": "1.0.0",
+  "description": "专为 macOS 设计的照片水印生成工具",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "Frontsea",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.2.3",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.frontsea.watermark",
+    "productName": "Frontsea Mark",
+    "mac": {
+      "icon": "icon.png",
+      "target": [
+        "dmg"
+      ]
+    }
+  }
+}
